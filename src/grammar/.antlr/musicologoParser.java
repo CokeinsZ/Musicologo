@@ -1,4 +1,4 @@
-// Generated from c://Users//usuario//Pictures//PROYECTOPOO//Musicologo//src//grammar//musicologo.g4 by ANTLR 4.13.1
+// Generated from c:/Users/alejandro/Documents/musica/src/grammar/musicologo.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -16,7 +16,7 @@ public class musicologoParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, COMANDO=2, ARCHIVO_MP3=3, DURACION=4;
+		T__0=1, COMANDO=2, ARCHIVO_MP3=3, RUTA=4, DURACION=5;
 	public static final int
 		RULE_inicio = 0, RULE_expresion = 1;
 	private static String[] makeRuleNames() {
@@ -34,7 +34,7 @@ public class musicologoParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "COMANDO", "ARCHIVO_MP3", "DURACION"
+			null, null, "COMANDO", "ARCHIVO_MP3", "RUTA", "DURACION"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -155,12 +155,14 @@ public class musicologoParser extends Parser {
 	public static class FuncionContext extends ExpresionContext {
 		public TerminalNode COMANDO() { return getToken(musicologoParser.COMANDO, 0); }
 		public TerminalNode ARCHIVO_MP3() { return getToken(musicologoParser.ARCHIVO_MP3, 0); }
+		public TerminalNode RUTA() { return getToken(musicologoParser.RUTA, 0); }
 		public FuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
 	}
 
 	public final ExpresionContext expresion() throws RecognitionException {
 		ExpresionContext _localctx = new ExpresionContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_expresion);
+		int _la;
 		try {
 			_localctx = new FuncionContext(_localctx);
 			enterOuterAlt(_localctx, 1);
@@ -169,7 +171,17 @@ public class musicologoParser extends Parser {
 			match(COMANDO);
 			setState(13);
 			match(T__0);
-			setState(14);
+			setState(15);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==RUTA) {
+				{
+				setState(14);
+				match(RUTA);
+				}
+			}
+
+			setState(17);
 			match(ARCHIVO_MP3);
 			}
 		}
@@ -185,17 +197,20 @@ public class musicologoParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0004\u0011\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0004\u0001\u0005\u0014\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
 		"\u0001\u0000\u0005\u0000\u0006\b\u0000\n\u0000\f\u0000\t\t\u0000\u0001"+
-		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0000\u0000\u0002\u0000\u0002\u0000\u0000\u000f\u0000\u0007\u0001"+
-		"\u0000\u0000\u0000\u0002\f\u0001\u0000\u0000\u0000\u0004\u0006\u0003\u0002"+
-		"\u0001\u0000\u0005\u0004\u0001\u0000\u0000\u0000\u0006\t\u0001\u0000\u0000"+
-		"\u0000\u0007\u0005\u0001\u0000\u0000\u0000\u0007\b\u0001\u0000\u0000\u0000"+
-		"\b\n\u0001\u0000\u0000\u0000\t\u0007\u0001\u0000\u0000\u0000\n\u000b\u0005"+
-		"\u0000\u0000\u0001\u000b\u0001\u0001\u0000\u0000\u0000\f\r\u0005\u0002"+
-		"\u0000\u0000\r\u000e\u0005\u0001\u0000\u0000\u000e\u000f\u0005\u0003\u0000"+
-		"\u0000\u000f\u0003\u0001\u0000\u0000\u0000\u0001\u0007";
+		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u0010"+
+		"\b\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0000\u0000\u0002\u0000\u0002"+
+		"\u0000\u0000\u0013\u0000\u0007\u0001\u0000\u0000\u0000\u0002\f\u0001\u0000"+
+		"\u0000\u0000\u0004\u0006\u0003\u0002\u0001\u0000\u0005\u0004\u0001\u0000"+
+		"\u0000\u0000\u0006\t\u0001\u0000\u0000\u0000\u0007\u0005\u0001\u0000\u0000"+
+		"\u0000\u0007\b\u0001\u0000\u0000\u0000\b\n\u0001\u0000\u0000\u0000\t\u0007"+
+		"\u0001\u0000\u0000\u0000\n\u000b\u0005\u0000\u0000\u0001\u000b\u0001\u0001"+
+		"\u0000\u0000\u0000\f\r\u0005\u0002\u0000\u0000\r\u000f\u0005\u0001\u0000"+
+		"\u0000\u000e\u0010\u0005\u0004\u0000\u0000\u000f\u000e\u0001\u0000\u0000"+
+		"\u0000\u000f\u0010\u0001\u0000\u0000\u0000\u0010\u0011\u0001\u0000\u0000"+
+		"\u0000\u0011\u0012\u0005\u0003\u0000\u0000\u0012\u0003\u0001\u0000\u0000"+
+		"\u0000\u0002\u0007\u000f";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

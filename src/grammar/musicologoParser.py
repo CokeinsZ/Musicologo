@@ -10,11 +10,12 @@ else:
 
 def serializedATN():
     return [
-        4,1,4,17,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,1,
-        1,1,1,1,1,1,1,1,1,0,0,2,0,2,0,0,15,0,7,1,0,0,0,2,12,1,0,0,0,4,6,
-        3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,0,0,7,8,1,0,0,0,8,10,1,0,
-        0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,0,0,12,13,5,2,0,0,13,14,5,
-        1,0,0,14,15,5,3,0,0,15,3,1,0,0,0,1,7
+        4,1,5,20,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,1,
+        1,1,1,1,1,3,1,16,8,1,1,1,1,1,1,1,0,0,2,0,2,0,0,19,0,7,1,0,0,0,2,
+        12,1,0,0,0,4,6,3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,0,0,7,8,1,
+        0,0,0,8,10,1,0,0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,0,0,12,13,
+        5,2,0,0,13,15,5,1,0,0,14,16,5,4,0,0,15,14,1,0,0,0,15,16,1,0,0,0,
+        16,17,1,0,0,0,17,18,5,3,0,0,18,3,1,0,0,0,2,7,15
     ]
 
 class musicologoParser ( Parser ):
@@ -30,7 +31,7 @@ class musicologoParser ( Parser ):
     literalNames = [ "<INVALID>", "' '", "'cargar'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "COMANDO", "ARCHIVO_MP3", 
-                      "DURACION" ]
+                      "RUTA", "DURACION" ]
 
     RULE_inicio = 0
     RULE_expresion = 1
@@ -41,7 +42,8 @@ class musicologoParser ( Parser ):
     T__0=1
     COMANDO=2
     ARCHIVO_MP3=3
-    DURACION=4
+    RUTA=4
+    DURACION=5
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -144,6 +146,8 @@ class musicologoParser ( Parser ):
             return self.getToken(musicologoParser.COMANDO, 0)
         def ARCHIVO_MP3(self):
             return self.getToken(musicologoParser.ARCHIVO_MP3, 0)
+        def RUTA(self):
+            return self.getToken(musicologoParser.RUTA, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFuncion" ):
@@ -165,6 +169,7 @@ class musicologoParser ( Parser ):
 
         localctx = musicologoParser.ExpresionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_expresion)
+        self._la = 0 # Token type
         try:
             localctx = musicologoParser.FuncionContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
@@ -172,7 +177,15 @@ class musicologoParser ( Parser ):
             self.match(musicologoParser.COMANDO)
             self.state = 13
             self.match(musicologoParser.T__0)
-            self.state = 14
+            self.state = 15
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==4:
+                self.state = 14
+                self.match(musicologoParser.RUTA)
+
+
+            self.state = 17
             self.match(musicologoParser.ARCHIVO_MP3)
         except RecognitionException as re:
             localctx.exception = re
