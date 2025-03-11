@@ -16,25 +16,27 @@ public class musicologoParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, COMANDO=2, ARCHIVO_MP3=3, RUTA=4, DURACION=5;
+		T__0=1, COMANDO_CARGAR=2, COMANDO_RECORTAR=3, ARCHIVO_MP3=4, RUTA=5, DURACION=6, 
+		WS=7;
 	public static final int
-		RULE_inicio = 0, RULE_expresion = 1;
+		RULE_inicio = 0, RULE_expresion = 1, RULE_cargarExpresion = 2, RULE_recortarExpresion = 3;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"inicio", "expresion"
+			"inicio", "expresion", "cargarExpresion", "recortarExpresion"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "' '", "'cargar'"
+			null, "' '"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "COMANDO", "ARCHIVO_MP3", "RUTA", "DURACION"
+			null, null, "COMANDO_CARGAR", "COMANDO_RECORTAR", "ARCHIVO_MP3", "RUTA", 
+			"DURACION", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -110,21 +112,21 @@ public class musicologoParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(7);
+			setState(11);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==COMANDO) {
+			while (_la==COMANDO_CARGAR || _la==COMANDO_RECORTAR) {
 				{
 				{
-				setState(4);
+				setState(8);
 				expresion();
 				}
 				}
-				setState(9);
+				setState(13);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(10);
+			setState(14);
 			match(EOF);
 			}
 		}
@@ -152,36 +154,126 @@ public class musicologoParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class FuncionContext extends ExpresionContext {
-		public TerminalNode COMANDO() { return getToken(musicologoParser.COMANDO, 0); }
-		public TerminalNode ARCHIVO_MP3() { return getToken(musicologoParser.ARCHIVO_MP3, 0); }
-		public TerminalNode RUTA() { return getToken(musicologoParser.RUTA, 0); }
-		public FuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
+	public static class RecortarFuncionContext extends ExpresionContext {
+		public RecortarExpresionContext recortarExpresion() {
+			return getRuleContext(RecortarExpresionContext.class,0);
+		}
+		public RecortarFuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CargarFuncionContext extends ExpresionContext {
+		public CargarExpresionContext cargarExpresion() {
+			return getRuleContext(CargarExpresionContext.class,0);
+		}
+		public CargarFuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
 	}
 
 	public final ExpresionContext expresion() throws RecognitionException {
 		ExpresionContext _localctx = new ExpresionContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_expresion);
+		try {
+			setState(18);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case COMANDO_CARGAR:
+				_localctx = new CargarFuncionContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(16);
+				cargarExpresion();
+				}
+				break;
+			case COMANDO_RECORTAR:
+				_localctx = new RecortarFuncionContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(17);
+				recortarExpresion();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class CargarExpresionContext extends ParserRuleContext {
+		public TerminalNode COMANDO_CARGAR() { return getToken(musicologoParser.COMANDO_CARGAR, 0); }
+		public TerminalNode ARCHIVO_MP3() { return getToken(musicologoParser.ARCHIVO_MP3, 0); }
+		public TerminalNode RUTA() { return getToken(musicologoParser.RUTA, 0); }
+		public CargarExpresionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_cargarExpresion; }
+	}
+
+	public final CargarExpresionContext cargarExpresion() throws RecognitionException {
+		CargarExpresionContext _localctx = new CargarExpresionContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_cargarExpresion);
 		int _la;
 		try {
-			_localctx = new FuncionContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(12);
-			match(COMANDO);
-			setState(13);
+			setState(20);
+			match(COMANDO_CARGAR);
+			setState(21);
 			match(T__0);
-			setState(15);
+			setState(23);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==RUTA) {
 				{
-				setState(14);
+				setState(22);
 				match(RUTA);
 				}
 			}
 
-			setState(17);
+			setState(25);
+			match(ARCHIVO_MP3);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class RecortarExpresionContext extends ParserRuleContext {
+		public TerminalNode COMANDO_RECORTAR() { return getToken(musicologoParser.COMANDO_RECORTAR, 0); }
+		public TerminalNode ARCHIVO_MP3() { return getToken(musicologoParser.ARCHIVO_MP3, 0); }
+		public RecortarExpresionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_recortarExpresion; }
+	}
+
+	public final RecortarExpresionContext recortarExpresion() throws RecognitionException {
+		RecortarExpresionContext _localctx = new RecortarExpresionContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_recortarExpresion);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(27);
+			match(COMANDO_RECORTAR);
+			setState(28);
+			match(T__0);
+			setState(29);
 			match(ARCHIVO_MP3);
 			}
 		}
@@ -197,20 +289,27 @@ public class musicologoParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0005\u0014\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
-		"\u0001\u0000\u0005\u0000\u0006\b\u0000\n\u0000\f\u0000\t\t\u0000\u0001"+
-		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u0010"+
-		"\b\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0000\u0000\u0002\u0000\u0002"+
-		"\u0000\u0000\u0013\u0000\u0007\u0001\u0000\u0000\u0000\u0002\f\u0001\u0000"+
-		"\u0000\u0000\u0004\u0006\u0003\u0002\u0001\u0000\u0005\u0004\u0001\u0000"+
-		"\u0000\u0000\u0006\t\u0001\u0000\u0000\u0000\u0007\u0005\u0001\u0000\u0000"+
-		"\u0000\u0007\b\u0001\u0000\u0000\u0000\b\n\u0001\u0000\u0000\u0000\t\u0007"+
-		"\u0001\u0000\u0000\u0000\n\u000b\u0005\u0000\u0000\u0001\u000b\u0001\u0001"+
-		"\u0000\u0000\u0000\f\r\u0005\u0002\u0000\u0000\r\u000f\u0005\u0001\u0000"+
-		"\u0000\u000e\u0010\u0005\u0004\u0000\u0000\u000f\u000e\u0001\u0000\u0000"+
-		"\u0000\u000f\u0010\u0001\u0000\u0000\u0000\u0010\u0011\u0001\u0000\u0000"+
-		"\u0000\u0011\u0012\u0005\u0003\u0000\u0000\u0012\u0003\u0001\u0000\u0000"+
-		"\u0000\u0002\u0007\u000f";
+		"\u0004\u0001\u0007 \u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0001\u0000\u0005\u0000\n\b"+
+		"\u0000\n\u0000\f\u0000\r\t\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001"+
+		"\u0001\u0003\u0001\u0013\b\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0003"+
+		"\u0002\u0018\b\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0001\u0003\u0000\u0000\u0004\u0000\u0002\u0004\u0006"+
+		"\u0000\u0000\u001e\u0000\u000b\u0001\u0000\u0000\u0000\u0002\u0012\u0001"+
+		"\u0000\u0000\u0000\u0004\u0014\u0001\u0000\u0000\u0000\u0006\u001b\u0001"+
+		"\u0000\u0000\u0000\b\n\u0003\u0002\u0001\u0000\t\b\u0001\u0000\u0000\u0000"+
+		"\n\r\u0001\u0000\u0000\u0000\u000b\t\u0001\u0000\u0000\u0000\u000b\f\u0001"+
+		"\u0000\u0000\u0000\f\u000e\u0001\u0000\u0000\u0000\r\u000b\u0001\u0000"+
+		"\u0000\u0000\u000e\u000f\u0005\u0000\u0000\u0001\u000f\u0001\u0001\u0000"+
+		"\u0000\u0000\u0010\u0013\u0003\u0004\u0002\u0000\u0011\u0013\u0003\u0006"+
+		"\u0003\u0000\u0012\u0010\u0001\u0000\u0000\u0000\u0012\u0011\u0001\u0000"+
+		"\u0000\u0000\u0013\u0003\u0001\u0000\u0000\u0000\u0014\u0015\u0005\u0002"+
+		"\u0000\u0000\u0015\u0017\u0005\u0001\u0000\u0000\u0016\u0018\u0005\u0005"+
+		"\u0000\u0000\u0017\u0016\u0001\u0000\u0000\u0000\u0017\u0018\u0001\u0000"+
+		"\u0000\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u001a\u0005\u0004"+
+		"\u0000\u0000\u001a\u0005\u0001\u0000\u0000\u0000\u001b\u001c\u0005\u0003"+
+		"\u0000\u0000\u001c\u001d\u0005\u0001\u0000\u0000\u001d\u001e\u0005\u0004"+
+		"\u0000\u0000\u001e\u0007\u0001\u0000\u0000\u0000\u0003\u000b\u0012\u0017";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

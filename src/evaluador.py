@@ -10,7 +10,10 @@ class Evaluador(musicologoVisitor):
 
     # Visit a parse tree produced by musicologoParser#funcion.
     def visitFuncion(self, ctx:musicologoParser.FuncionContext):
-        nombre = ctx.getChild(2).getText() + ctx.getChild(3).getText(); #Obtiene la ruta y el nombre del archivo
+        if ctx.getChild(3) is not None:
+            nombre = ctx.getChild(2).getText() + ctx.getChild(3).getText();
+        else:
+            nombre = ctx.getChild(2).getText()
         
         print(nombre)
 
