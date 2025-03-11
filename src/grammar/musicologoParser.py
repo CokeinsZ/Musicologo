@@ -10,11 +10,11 @@ else:
 
 def serializedATN():
     return [
-        4,1,3,16,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,1,
-        1,1,1,1,1,1,1,0,0,2,0,2,0,0,14,0,7,1,0,0,0,2,12,1,0,0,0,4,6,3,2,
-        1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,0,0,7,8,1,0,0,0,8,10,1,0,0,0,
-        9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,0,0,12,13,5,1,0,0,13,14,5,2,0,
-        0,14,3,1,0,0,0,1,7
+        4,1,4,17,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,1,
+        1,1,1,1,1,1,1,1,1,0,0,2,0,2,0,0,15,0,7,1,0,0,0,2,12,1,0,0,0,4,6,
+        3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,0,0,7,8,1,0,0,0,8,10,1,0,
+        0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,0,0,12,13,5,2,0,0,13,14,5,
+        1,0,0,14,15,5,3,0,0,15,3,1,0,0,0,1,7
     ]
 
 class musicologoParser ( Parser ):
@@ -27,9 +27,10 @@ class musicologoParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'cargar'" ]
+    literalNames = [ "<INVALID>", "' '", "'cargar'" ]
 
-    symbolicNames = [ "<INVALID>", "COMANDO", "ARCHIVO_MP3", "DURACION" ]
+    symbolicNames = [ "<INVALID>", "<INVALID>", "COMANDO", "ARCHIVO_MP3", 
+                      "DURACION" ]
 
     RULE_inicio = 0
     RULE_expresion = 1
@@ -37,9 +38,10 @@ class musicologoParser ( Parser ):
     ruleNames =  [ "inicio", "expresion" ]
 
     EOF = Token.EOF
-    COMANDO=1
-    ARCHIVO_MP3=2
-    DURACION=3
+    T__0=1
+    COMANDO=2
+    ARCHIVO_MP3=3
+    DURACION=4
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -97,7 +99,7 @@ class musicologoParser ( Parser ):
             self.state = 7
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==1:
+            while _la==2:
                 self.state = 4
                 self.expresion()
                 self.state = 9
@@ -169,6 +171,8 @@ class musicologoParser ( Parser ):
             self.state = 12
             self.match(musicologoParser.COMANDO)
             self.state = 13
+            self.match(musicologoParser.T__0)
+            self.state = 14
             self.match(musicologoParser.ARCHIVO_MP3)
         except RecognitionException as re:
             localctx.exception = re

@@ -11,7 +11,9 @@ class Evaluador(musicologoVisitor):
 
 
     # Visit a parse tree produced by musicologoParser#cargarMp3.
-    def visitFuncion(self, ctx:musicologoParser.CargarMp3Context):
-        nombre = self.visit(ctx.getChild(1)).getText()
+    def visitFuncion(self, ctx:musicologoParser.FuncionContext):
+        nombre = self.visit(ctx.getChild(1))
+        
+        print(nombre)
 
         AudioSegment.from_file(nombre, format="mp3").export("audio_editado.mp3", format="mp3")

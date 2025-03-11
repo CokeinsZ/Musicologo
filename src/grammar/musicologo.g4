@@ -2,7 +2,7 @@ grammar musicologo;
 
 inicio: expresion* EOF;
 
-expresion: COMANDO ARCHIVO_MP3 #funcion; // TO-DO poner un nombre bonito
+expresion: COMANDO ' ' ARCHIVO_MP3 #funcion; // TO-DO poner un nombre bonito
 
 COMANDO: 'cargar';
 
