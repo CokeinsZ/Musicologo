@@ -16,8 +16,8 @@ public class musicologoParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, COMANDO_CARGAR=2, COMANDO_RECORTAR=3, ARCHIVO_MP3=4, RUTA=5, TIEMPO=6, 
-		WS=7;
+		T__0=1, COMANDO_CARGAR=2, COMANDO_RECORTAR=3, COMANDO_EXPORTAR=4, ARCHIVO_MP3=5, 
+		RUTA=6, TIEMPO=7, WS=8;
 	public static final int
 		RULE_inicio = 0, RULE_expresion = 1;
 	private static String[] makeRuleNames() {
@@ -35,8 +35,8 @@ public class musicologoParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "COMANDO_CARGAR", "COMANDO_RECORTAR", "ARCHIVO_MP3", "RUTA", 
-			"TIEMPO", "WS"
+			null, null, "COMANDO_CARGAR", "COMANDO_RECORTAR", "COMANDO_EXPORTAR", 
+			"ARCHIVO_MP3", "RUTA", "TIEMPO", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -115,7 +115,7 @@ public class musicologoParser extends Parser {
 			setState(7);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==COMANDO_CARGAR || _la==COMANDO_RECORTAR) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 28L) != 0)) {
 				{
 				{
 				setState(4);
@@ -161,7 +161,13 @@ public class musicologoParser extends Parser {
 			return getToken(musicologoParser.TIEMPO, i);
 		}
 		public TerminalNode ARCHIVO_MP3() { return getToken(musicologoParser.ARCHIVO_MP3, 0); }
+		public TerminalNode RUTA() { return getToken(musicologoParser.RUTA, 0); }
 		public RecortarFuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ExportarFuncionContext extends ExpresionContext {
+		public TerminalNode COMANDO_EXPORTAR() { return getToken(musicologoParser.COMANDO_EXPORTAR, 0); }
+		public ExportarFuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CargarFuncionContext extends ExpresionContext {
@@ -176,7 +182,7 @@ public class musicologoParser extends Parser {
 		enterRule(_localctx, 2, RULE_expresion);
 		int _la;
 		try {
-			setState(23);
+			setState(31);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case COMANDO_CARGAR:
@@ -212,9 +218,39 @@ public class musicologoParser extends Parser {
 				setState(20);
 				match(TIEMPO);
 				setState(21);
-				match(TIEMPO);
+				match(T__0);
 				setState(22);
-				match(ARCHIVO_MP3);
+				match(TIEMPO);
+				setState(28);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==T__0) {
+					{
+					setState(23);
+					match(T__0);
+					setState(25);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+					if (_la==RUTA) {
+						{
+						setState(24);
+						match(RUTA);
+						}
+					}
+
+					setState(27);
+					match(ARCHIVO_MP3);
+					}
+				}
+
+				}
+				break;
+			case COMANDO_EXPORTAR:
+				_localctx = new ExportarFuncionContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(30);
+				match(COMANDO_EXPORTAR);
 				}
 				break;
 			default:
@@ -233,24 +269,31 @@ public class musicologoParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0007\u001a\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
-		"\u0001\u0000\u0005\u0000\u0006\b\u0000\n\u0000\f\u0000\t\t\u0000\u0001"+
-		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u0010"+
-		"\b\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0003\u0001\u0018\b\u0001\u0001\u0001\u0000\u0000\u0002\u0000\u0002"+
-		"\u0000\u0000\u001a\u0000\u0007\u0001\u0000\u0000\u0000\u0002\u0017\u0001"+
-		"\u0000\u0000\u0000\u0004\u0006\u0003\u0002\u0001\u0000\u0005\u0004\u0001"+
-		"\u0000\u0000\u0000\u0006\t\u0001\u0000\u0000\u0000\u0007\u0005\u0001\u0000"+
-		"\u0000\u0000\u0007\b\u0001\u0000\u0000\u0000\b\n\u0001\u0000\u0000\u0000"+
-		"\t\u0007\u0001\u0000\u0000\u0000\n\u000b\u0005\u0000\u0000\u0001\u000b"+
-		"\u0001\u0001\u0000\u0000\u0000\f\r\u0005\u0002\u0000\u0000\r\u000f\u0005"+
-		"\u0001\u0000\u0000\u000e\u0010\u0005\u0005\u0000\u0000\u000f\u000e\u0001"+
-		"\u0000\u0000\u0000\u000f\u0010\u0001\u0000\u0000\u0000\u0010\u0011\u0001"+
-		"\u0000\u0000\u0000\u0011\u0018\u0005\u0004\u0000\u0000\u0012\u0013\u0005"+
-		"\u0003\u0000\u0000\u0013\u0014\u0005\u0001\u0000\u0000\u0014\u0015\u0005"+
-		"\u0006\u0000\u0000\u0015\u0016\u0005\u0006\u0000\u0000\u0016\u0018\u0005"+
-		"\u0004\u0000\u0000\u0017\f\u0001\u0000\u0000\u0000\u0017\u0012\u0001\u0000"+
-		"\u0000\u0000\u0018\u0003\u0001\u0000\u0000\u0000\u0003\u0007\u000f\u0017";
+		"\u0004\u0001\b\"\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0001"+
+		"\u0000\u0005\u0000\u0006\b\u0000\n\u0000\f\u0000\t\t\u0000\u0001\u0000"+
+		"\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u0010\b\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0003\u0001\u001a\b\u0001\u0001\u0001\u0003\u0001"+
+		"\u001d\b\u0001\u0001\u0001\u0003\u0001 \b\u0001\u0001\u0001\u0000\u0000"+
+		"\u0002\u0000\u0002\u0000\u0000%\u0000\u0007\u0001\u0000\u0000\u0000\u0002"+
+		"\u001f\u0001\u0000\u0000\u0000\u0004\u0006\u0003\u0002\u0001\u0000\u0005"+
+		"\u0004\u0001\u0000\u0000\u0000\u0006\t\u0001\u0000\u0000\u0000\u0007\u0005"+
+		"\u0001\u0000\u0000\u0000\u0007\b\u0001\u0000\u0000\u0000\b\n\u0001\u0000"+
+		"\u0000\u0000\t\u0007\u0001\u0000\u0000\u0000\n\u000b\u0005\u0000\u0000"+
+		"\u0001\u000b\u0001\u0001\u0000\u0000\u0000\f\r\u0005\u0002\u0000\u0000"+
+		"\r\u000f\u0005\u0001\u0000\u0000\u000e\u0010\u0005\u0006\u0000\u0000\u000f"+
+		"\u000e\u0001\u0000\u0000\u0000\u000f\u0010\u0001\u0000\u0000\u0000\u0010"+
+		"\u0011\u0001\u0000\u0000\u0000\u0011 \u0005\u0005\u0000\u0000\u0012\u0013"+
+		"\u0005\u0003\u0000\u0000\u0013\u0014\u0005\u0001\u0000\u0000\u0014\u0015"+
+		"\u0005\u0007\u0000\u0000\u0015\u0016\u0005\u0001\u0000\u0000\u0016\u001c"+
+		"\u0005\u0007\u0000\u0000\u0017\u0019\u0005\u0001\u0000\u0000\u0018\u001a"+
+		"\u0005\u0006\u0000\u0000\u0019\u0018\u0001\u0000\u0000\u0000\u0019\u001a"+
+		"\u0001\u0000\u0000\u0000\u001a\u001b\u0001\u0000\u0000\u0000\u001b\u001d"+
+		"\u0005\u0005\u0000\u0000\u001c\u0017\u0001\u0000\u0000\u0000\u001c\u001d"+
+		"\u0001\u0000\u0000\u0000\u001d \u0001\u0000\u0000\u0000\u001e \u0005\u0004"+
+		"\u0000\u0000\u001f\f\u0001\u0000\u0000\u0000\u001f\u0012\u0001\u0000\u0000"+
+		"\u0000\u001f\u001e\u0001\u0000\u0000\u0000 \u0003\u0001\u0000\u0000\u0000"+
+		"\u0005\u0007\u000f\u0019\u001c\u001f";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

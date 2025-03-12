@@ -35,5 +35,14 @@ class musicologoListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by musicologoParser#exportarFuncion.
+    def enterExportarFuncion(self, ctx:musicologoParser.ExportarFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#exportarFuncion.
+    def exitExportarFuncion(self, ctx:musicologoParser.ExportarFuncionContext):
+        pass
+
+
 
 del musicologoParser

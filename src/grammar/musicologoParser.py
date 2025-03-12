@@ -10,14 +10,17 @@ else:
 
 def serializedATN():
     return [
-        4,1,7,26,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,1,
-        1,1,1,1,1,3,1,16,8,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,24,8,1,1,1,0,0,
-        2,0,2,0,0,26,0,7,1,0,0,0,2,23,1,0,0,0,4,6,3,2,1,0,5,4,1,0,0,0,6,
-        9,1,0,0,0,7,5,1,0,0,0,7,8,1,0,0,0,8,10,1,0,0,0,9,7,1,0,0,0,10,11,
-        5,0,0,1,11,1,1,0,0,0,12,13,5,2,0,0,13,15,5,1,0,0,14,16,5,5,0,0,15,
-        14,1,0,0,0,15,16,1,0,0,0,16,17,1,0,0,0,17,24,5,4,0,0,18,19,5,3,0,
-        0,19,20,5,1,0,0,20,21,5,6,0,0,21,22,5,6,0,0,22,24,5,4,0,0,23,12,
-        1,0,0,0,23,18,1,0,0,0,24,3,1,0,0,0,3,7,15,23
+        4,1,8,34,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,1,
+        1,1,1,1,1,3,1,16,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,26,8,1,
+        1,1,3,1,29,8,1,1,1,3,1,32,8,1,1,1,0,0,2,0,2,0,0,37,0,7,1,0,0,0,2,
+        31,1,0,0,0,4,6,3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,0,0,7,8,1,
+        0,0,0,8,10,1,0,0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,0,0,12,13,
+        5,2,0,0,13,15,5,1,0,0,14,16,5,6,0,0,15,14,1,0,0,0,15,16,1,0,0,0,
+        16,17,1,0,0,0,17,32,5,5,0,0,18,19,5,3,0,0,19,20,5,1,0,0,20,21,5,
+        7,0,0,21,22,5,1,0,0,22,28,5,7,0,0,23,25,5,1,0,0,24,26,5,6,0,0,25,
+        24,1,0,0,0,25,26,1,0,0,0,26,27,1,0,0,0,27,29,5,5,0,0,28,23,1,0,0,
+        0,28,29,1,0,0,0,29,32,1,0,0,0,30,32,5,4,0,0,31,12,1,0,0,0,31,18,
+        1,0,0,0,31,30,1,0,0,0,32,3,1,0,0,0,5,7,15,25,28,31
     ]
 
 class musicologoParser ( Parser ):
@@ -33,7 +36,8 @@ class musicologoParser ( Parser ):
     literalNames = [ "<INVALID>", "' '" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "COMANDO_CARGAR", "COMANDO_RECORTAR", 
-                      "ARCHIVO_MP3", "RUTA", "TIEMPO", "WS" ]
+                      "COMANDO_EXPORTAR", "ARCHIVO_MP3", "RUTA", "TIEMPO", 
+                      "WS" ]
 
     RULE_inicio = 0
     RULE_expresion = 1
@@ -44,10 +48,11 @@ class musicologoParser ( Parser ):
     T__0=1
     COMANDO_CARGAR=2
     COMANDO_RECORTAR=3
-    ARCHIVO_MP3=4
-    RUTA=5
-    TIEMPO=6
-    WS=7
+    COMANDO_EXPORTAR=4
+    ARCHIVO_MP3=5
+    RUTA=6
+    TIEMPO=7
+    WS=8
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -105,7 +110,7 @@ class musicologoParser ( Parser ):
             self.state = 7
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==2 or _la==3:
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 28) != 0):
                 self.state = 4
                 self.expresion()
                 self.state = 9
@@ -155,6 +160,8 @@ class musicologoParser ( Parser ):
                 return self.getToken(musicologoParser.TIEMPO, i)
         def ARCHIVO_MP3(self):
             return self.getToken(musicologoParser.ARCHIVO_MP3, 0)
+        def RUTA(self):
+            return self.getToken(musicologoParser.RUTA, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterRecortarFuncion" ):
@@ -167,6 +174,30 @@ class musicologoParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitRecortarFuncion" ):
                 return visitor.visitRecortarFuncion(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExportarFuncionContext(ExpresionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a musicologoParser.ExpresionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def COMANDO_EXPORTAR(self):
+            return self.getToken(musicologoParser.COMANDO_EXPORTAR, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExportarFuncion" ):
+                listener.enterExportarFuncion(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExportarFuncion" ):
+                listener.exitExportarFuncion(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExportarFuncion" ):
+                return visitor.visitExportarFuncion(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -206,7 +237,7 @@ class musicologoParser ( Parser ):
         self.enterRule(localctx, 2, self.RULE_expresion)
         self._la = 0 # Token type
         try:
-            self.state = 23
+            self.state = 31
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [2]:
@@ -219,7 +250,7 @@ class musicologoParser ( Parser ):
                 self.state = 15
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==5:
+                if _la==6:
                     self.state = 14
                     self.match(musicologoParser.RUTA)
 
@@ -237,9 +268,33 @@ class musicologoParser ( Parser ):
                 self.state = 20
                 self.match(musicologoParser.TIEMPO)
                 self.state = 21
-                self.match(musicologoParser.TIEMPO)
+                self.match(musicologoParser.T__0)
                 self.state = 22
-                self.match(musicologoParser.ARCHIVO_MP3)
+                self.match(musicologoParser.TIEMPO)
+                self.state = 28
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==1:
+                    self.state = 23
+                    self.match(musicologoParser.T__0)
+                    self.state = 25
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+                    if _la==6:
+                        self.state = 24
+                        self.match(musicologoParser.RUTA)
+
+
+                    self.state = 27
+                    self.match(musicologoParser.ARCHIVO_MP3)
+
+
+                pass
+            elif token in [4]:
+                localctx = musicologoParser.ExportarFuncionContext(self, localctx)
+                self.enterOuterAlt(localctx, 3)
+                self.state = 30
+                self.match(musicologoParser.COMANDO_EXPORTAR)
                 pass
             else:
                 raise NoViableAltException(self)

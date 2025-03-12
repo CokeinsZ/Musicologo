@@ -23,4 +23,11 @@ class musicologoVisitor(ParseTreeVisitor):
     def visitRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):
         return self.visitChildren(ctx)
 
+
+    # Visit a parse tree produced by musicologoParser#exportarFuncion.
+    def visitExportarFuncion(self, ctx:musicologoParser.ExportarFuncionContext):
+        return self.visitChildren(ctx)
+
+
+
 del musicologoParser
