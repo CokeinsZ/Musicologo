@@ -17,12 +17,21 @@ class musicologoListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by musicologoParser#funcion.
-    def enterFuncion(self, ctx:musicologoParser.FuncionContext):
+    # Enter a parse tree produced by musicologoParser#cargarFuncion.
+    def enterCargarFuncion(self, ctx:musicologoParser.CargarFuncionContext):
         pass
 
-    # Exit a parse tree produced by musicologoParser#funcion.
-    def exitFuncion(self, ctx:musicologoParser.FuncionContext):
+    # Exit a parse tree produced by musicologoParser#cargarFuncion.
+    def exitCargarFuncion(self, ctx:musicologoParser.CargarFuncionContext):
+        pass
+
+
+    # Enter a parse tree produced by musicologoParser#recortarFuncion.
+    def enterRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#recortarFuncion.
+    def exitRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):
         pass
 
 

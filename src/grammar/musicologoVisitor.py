@@ -14,10 +14,13 @@ class musicologoVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by musicologoParser#funcion.
-    def visitFuncion(self, ctx:musicologoParser.FuncionContext):
+    # Visit a parse tree produced by musicologoParser#cargarFuncion.
+    def visitCargarFuncion(self, ctx:musicologoParser.CargarFuncionContext):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by musicologoParser#recortarFuncion.
+    def visitRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):
+        return self.visitChildren(ctx)
 
 del musicologoParser

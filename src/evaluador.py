@@ -9,12 +9,17 @@ class Evaluador(musicologoVisitor):
             self.visit(hijo)
 
     # Visit a parse tree produced by musicologoParser#funcion.
-    def visitFuncion(self, ctx:musicologoParser.FuncionContext):
+    def visitCargarFuncion(self, ctx:musicologoParser.CargarFuncionContext):
+        # Check if there is a third child node in the parse tree
         if ctx.getChild(3) is not None:
-            nombre = ctx.getChild(2).getText() + ctx.getChild(3).getText();
+            # If there is, the name will be the path plus the name
+            nombre = ctx.getChild(2).getText() + ctx.getChild(3).getText()
         else:
+            # Otherwise, the name will just be the text of the second child node
             nombre = ctx.getChild(2).getText()
         
-        print(nombre)
+        #debug
+        print("Cargando archivo: " + nombre)
 
-        return AudioSegment.from_file(nombre, format="mp3") #Retorna el archivo de audio
+        # Return the audio file
+        return AudioSegment.from_file(nombre, format="mp3")
