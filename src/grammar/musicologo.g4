@@ -3,8 +3,8 @@ grammar musicologo;
 inicio: expresion* EOF;
 
 expresion: COMANDO_CARGAR ' ' RUTA? ARCHIVO_MP3 ' ' COMANDO_ASIGNAR ' ' ID #cargarFuncion
-         | COMANDO_RECORTAR ' ' TIEMPO ' ' TIEMPO ' ' ID (' ' ID)? #recortarFuncion
-         | COMANDO_EXPORTAR #exportarFuncion;
+         | COMANDO_RECORTAR ' ' TIEMPO ' ' TIEMPO ' ' ID ' ' COMANDO_ASIGNAR ' ' ID #recortarFuncion
+         | COMANDO_EXPORTAR ' ' ID #exportarFuncion;
 
 
 COMANDO_CARGAR: 'cargar' | 'load' | 'crg' | 'ld';

@@ -6,4 +6,6 @@ RUN pip install antlr4-python3-runtime pydub ffmpeg-python
 WORKDIR /app
 COPY . /app
 
+VOLUME ["/app/archivos"]
+
 CMD ["python", "src/main.py"]

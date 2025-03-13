@@ -10,18 +10,18 @@ else:
 
 def serializedATN():
     return [
-        4,1,10,37,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,
+        4,1,10,39,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,
         1,1,1,1,1,1,3,1,16,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-        1,1,1,1,1,1,1,3,1,32,8,1,1,1,3,1,35,8,1,1,1,0,0,2,0,2,0,0,39,0,7,
-        1,0,0,0,2,34,1,0,0,0,4,6,3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,
-        0,0,7,8,1,0,0,0,8,10,1,0,0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,
-        0,0,12,13,5,2,0,0,13,15,5,1,0,0,14,16,5,8,0,0,15,14,1,0,0,0,15,16,
-        1,0,0,0,16,17,1,0,0,0,17,18,5,6,0,0,18,19,5,1,0,0,19,20,5,5,0,0,
-        20,21,5,1,0,0,21,35,5,7,0,0,22,23,5,3,0,0,23,24,5,1,0,0,24,25,5,
-        9,0,0,25,26,5,1,0,0,26,27,5,9,0,0,27,28,5,1,0,0,28,31,5,7,0,0,29,
-        30,5,1,0,0,30,32,5,7,0,0,31,29,1,0,0,0,31,32,1,0,0,0,32,35,1,0,0,
-        0,33,35,5,4,0,0,34,12,1,0,0,0,34,22,1,0,0,0,34,33,1,0,0,0,35,3,1,
-        0,0,0,4,7,15,31,34
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,37,8,1,1,1,0,0,2,0,2,0,0,40,
+        0,7,1,0,0,0,2,36,1,0,0,0,4,6,3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,
+        1,0,0,0,7,8,1,0,0,0,8,10,1,0,0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,
+        1,0,0,0,12,13,5,2,0,0,13,15,5,1,0,0,14,16,5,8,0,0,15,14,1,0,0,0,
+        15,16,1,0,0,0,16,17,1,0,0,0,17,18,5,6,0,0,18,19,5,1,0,0,19,20,5,
+        5,0,0,20,21,5,1,0,0,21,37,5,7,0,0,22,23,5,3,0,0,23,24,5,1,0,0,24,
+        25,5,9,0,0,25,26,5,1,0,0,26,27,5,9,0,0,27,28,5,1,0,0,28,29,5,7,0,
+        0,29,30,5,1,0,0,30,31,5,5,0,0,31,32,5,1,0,0,32,37,5,7,0,0,33,34,
+        5,4,0,0,34,35,5,1,0,0,35,37,5,7,0,0,36,12,1,0,0,0,36,22,1,0,0,0,
+        36,33,1,0,0,0,37,3,1,0,0,0,3,7,15,36
     ]
 
 class musicologoParser ( Parser ):
@@ -166,6 +166,8 @@ class musicologoParser ( Parser ):
                 return self.getTokens(musicologoParser.ID)
             else:
                 return self.getToken(musicologoParser.ID, i)
+        def COMANDO_ASIGNAR(self):
+            return self.getToken(musicologoParser.COMANDO_ASIGNAR, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterRecortarFuncion" ):
@@ -190,6 +192,8 @@ class musicologoParser ( Parser ):
 
         def COMANDO_EXPORTAR(self):
             return self.getToken(musicologoParser.COMANDO_EXPORTAR, 0)
+        def ID(self):
+            return self.getToken(musicologoParser.ID, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterExportarFuncion" ):
@@ -245,7 +249,7 @@ class musicologoParser ( Parser ):
         self.enterRule(localctx, 2, self.RULE_expresion)
         self._la = 0 # Token type
         try:
-            self.state = 34
+            self.state = 36
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [2]:
@@ -291,22 +295,24 @@ class musicologoParser ( Parser ):
                 self.match(musicologoParser.T__0)
                 self.state = 28
                 self.match(musicologoParser.ID)
+                self.state = 29
+                self.match(musicologoParser.T__0)
+                self.state = 30
+                self.match(musicologoParser.COMANDO_ASIGNAR)
                 self.state = 31
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==1:
-                    self.state = 29
-                    self.match(musicologoParser.T__0)
-                    self.state = 30
-                    self.match(musicologoParser.ID)
-
-
+                self.match(musicologoParser.T__0)
+                self.state = 32
+                self.match(musicologoParser.ID)
                 pass
             elif token in [4]:
                 localctx = musicologoParser.ExportarFuncionContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 33
                 self.match(musicologoParser.COMANDO_EXPORTAR)
+                self.state = 34
+                self.match(musicologoParser.T__0)
+                self.state = 35
+                self.match(musicologoParser.ID)
                 pass
             else:
                 raise NoViableAltException(self)
