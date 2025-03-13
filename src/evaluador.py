@@ -4,8 +4,7 @@ from pydub import AudioSegment
 
 class Evaluador(musicologoVisitor):
     def __init__(self):
-        self.audio = None
-        self.audio_modificado = None
+        self.audios = {}
 
     # Visit a parse tree produced by musicologoParser#inicio.
     def visitInicio(self, ctx:musicologoParser.InicioContext):
@@ -14,19 +13,32 @@ class Evaluador(musicologoVisitor):
 
     # Visit a parse tree produced by musicologoParser#funcion.
     def visitCargarFuncion(self, ctx:musicologoParser.CargarFuncionContext):
-        # Check if there is a third child node in the parse tree
-        if ctx.getChild(3) is not None:
-            # If there is, the name will be the path plus the name
-            nombre = ctx.getChild(2).getText() + ctx.getChild(3).getText()
+        # Get the audio file
+        if (ctx.RUTA() is not None) and (ctx.ARCHIVO_MP3() is not None):
+            nombre = ctx.RUTA().getText() + ctx.ARCHIVO_MP3().getText() # Concatenate the path and the file name
+
+        elif ctx.ARCHIVO_MP3():
+            nombre = ctx.ARCHIVO_MP3().getText()
+
         else:
-            # Otherwise, the name will just be the text of the second child node
-            nombre = ctx.getChild(2).getText()
+            print("Error: No se proporcionó un archivo de audio.")
+            return None
         
+        # Get the ID
+        if ctx.ID() is not None:
+            id = ctx.ID().getText()
+
+        elif ctx.ID() in self.audios:
+            print("Error: El ID ya existe.")
+
+        else:
+            print("Error: No se proporcionó un ID.")        
+
+        self.audios[id] = AudioSegment.from_file(nombre, format="mp3")
+
         #debug
         print("Cargando archivo: " + nombre)
-
-        # Return the audio file
-        self.audio = AudioSegment.from_file(nombre, format="mp3")
+        print(self.audios)
     
     def visitRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):
         # Get the audio file

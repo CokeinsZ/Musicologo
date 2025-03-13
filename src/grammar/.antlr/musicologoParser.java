@@ -16,8 +16,8 @@ public class musicologoParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, COMANDO_CARGAR=2, COMANDO_RECORTAR=3, COMANDO_EXPORTAR=4, ARCHIVO_MP3=5, 
-		RUTA=6, TIEMPO=7, WS=8;
+		T__0=1, COMANDO_CARGAR=2, COMANDO_RECORTAR=3, COMANDO_EXPORTAR=4, COMANDO_ASIGNAR=5, 
+		ARCHIVO_MP3=6, ID=7, RUTA=8, TIEMPO=9, WS=10;
 	public static final int
 		RULE_inicio = 0, RULE_expresion = 1;
 	private static String[] makeRuleNames() {
@@ -36,7 +36,7 @@ public class musicologoParser extends Parser {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, "COMANDO_CARGAR", "COMANDO_RECORTAR", "COMANDO_EXPORTAR", 
-			"ARCHIVO_MP3", "RUTA", "TIEMPO", "WS"
+			"COMANDO_ASIGNAR", "ARCHIVO_MP3", "ID", "RUTA", "TIEMPO", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -160,8 +160,10 @@ public class musicologoParser extends Parser {
 		public TerminalNode TIEMPO(int i) {
 			return getToken(musicologoParser.TIEMPO, i);
 		}
-		public TerminalNode ARCHIVO_MP3() { return getToken(musicologoParser.ARCHIVO_MP3, 0); }
-		public TerminalNode RUTA() { return getToken(musicologoParser.RUTA, 0); }
+		public List<TerminalNode> ID() { return getTokens(musicologoParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(musicologoParser.ID, i);
+		}
 		public RecortarFuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -173,6 +175,8 @@ public class musicologoParser extends Parser {
 	public static class CargarFuncionContext extends ExpresionContext {
 		public TerminalNode COMANDO_CARGAR() { return getToken(musicologoParser.COMANDO_CARGAR, 0); }
 		public TerminalNode ARCHIVO_MP3() { return getToken(musicologoParser.ARCHIVO_MP3, 0); }
+		public TerminalNode COMANDO_ASIGNAR() { return getToken(musicologoParser.COMANDO_ASIGNAR, 0); }
+		public TerminalNode ID() { return getToken(musicologoParser.ID, 0); }
 		public TerminalNode RUTA() { return getToken(musicologoParser.RUTA, 0); }
 		public CargarFuncionContext(ExpresionContext ctx) { copyFrom(ctx); }
 	}
@@ -182,7 +186,7 @@ public class musicologoParser extends Parser {
 		enterRule(_localctx, 2, RULE_expresion);
 		int _la;
 		try {
-			setState(31);
+			setState(34);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case COMANDO_CARGAR:
@@ -205,41 +209,43 @@ public class musicologoParser extends Parser {
 
 				setState(17);
 				match(ARCHIVO_MP3);
+				setState(18);
+				match(T__0);
+				setState(19);
+				match(COMANDO_ASIGNAR);
+				setState(20);
+				match(T__0);
+				setState(21);
+				match(ID);
 				}
 				break;
 			case COMANDO_RECORTAR:
 				_localctx = new RecortarFuncionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(18);
-				match(COMANDO_RECORTAR);
-				setState(19);
-				match(T__0);
-				setState(20);
-				match(TIEMPO);
-				setState(21);
-				match(T__0);
 				setState(22);
+				match(COMANDO_RECORTAR);
+				setState(23);
+				match(T__0);
+				setState(24);
 				match(TIEMPO);
+				setState(25);
+				match(T__0);
+				setState(26);
+				match(TIEMPO);
+				setState(27);
+				match(T__0);
 				setState(28);
+				match(ID);
+				setState(31);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__0) {
 					{
-					setState(23);
+					setState(29);
 					match(T__0);
-					setState(25);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-					if (_la==RUTA) {
-						{
-						setState(24);
-						match(RUTA);
-						}
-					}
-
-					setState(27);
-					match(ARCHIVO_MP3);
+					setState(30);
+					match(ID);
 					}
 				}
 
@@ -249,7 +255,7 @@ public class musicologoParser extends Parser {
 				_localctx = new ExportarFuncionContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(30);
+				setState(33);
 				match(COMANDO_EXPORTAR);
 				}
 				break;
@@ -269,31 +275,32 @@ public class musicologoParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\b\"\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0001"+
+		"\u0004\u0001\n%\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0001"+
 		"\u0000\u0005\u0000\u0006\b\u0000\n\u0000\f\u0000\t\t\u0000\u0001\u0000"+
 		"\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u0010\b\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0003\u0001\u001a\b\u0001\u0001\u0001\u0003\u0001"+
-		"\u001d\b\u0001\u0001\u0001\u0003\u0001 \b\u0001\u0001\u0001\u0000\u0000"+
-		"\u0002\u0000\u0002\u0000\u0000%\u0000\u0007\u0001\u0000\u0000\u0000\u0002"+
-		"\u001f\u0001\u0000\u0000\u0000\u0004\u0006\u0003\u0002\u0001\u0000\u0005"+
-		"\u0004\u0001\u0000\u0000\u0000\u0006\t\u0001\u0000\u0000\u0000\u0007\u0005"+
-		"\u0001\u0000\u0000\u0000\u0007\b\u0001\u0000\u0000\u0000\b\n\u0001\u0000"+
-		"\u0000\u0000\t\u0007\u0001\u0000\u0000\u0000\n\u000b\u0005\u0000\u0000"+
-		"\u0001\u000b\u0001\u0001\u0000\u0000\u0000\f\r\u0005\u0002\u0000\u0000"+
-		"\r\u000f\u0005\u0001\u0000\u0000\u000e\u0010\u0005\u0006\u0000\u0000\u000f"+
-		"\u000e\u0001\u0000\u0000\u0000\u000f\u0010\u0001\u0000\u0000\u0000\u0010"+
-		"\u0011\u0001\u0000\u0000\u0000\u0011 \u0005\u0005\u0000\u0000\u0012\u0013"+
-		"\u0005\u0003\u0000\u0000\u0013\u0014\u0005\u0001\u0000\u0000\u0014\u0015"+
-		"\u0005\u0007\u0000\u0000\u0015\u0016\u0005\u0001\u0000\u0000\u0016\u001c"+
-		"\u0005\u0007\u0000\u0000\u0017\u0019\u0005\u0001\u0000\u0000\u0018\u001a"+
-		"\u0005\u0006\u0000\u0000\u0019\u0018\u0001\u0000\u0000\u0000\u0019\u001a"+
-		"\u0001\u0000\u0000\u0000\u001a\u001b\u0001\u0000\u0000\u0000\u001b\u001d"+
-		"\u0005\u0005\u0000\u0000\u001c\u0017\u0001\u0000\u0000\u0000\u001c\u001d"+
-		"\u0001\u0000\u0000\u0000\u001d \u0001\u0000\u0000\u0000\u001e \u0005\u0004"+
-		"\u0000\u0000\u001f\f\u0001\u0000\u0000\u0000\u001f\u0012\u0001\u0000\u0000"+
-		"\u0000\u001f\u001e\u0001\u0000\u0000\u0000 \u0003\u0001\u0000\u0000\u0000"+
-		"\u0005\u0007\u000f\u0019\u001c\u001f";
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0003\u0001 \b\u0001\u0001\u0001\u0003\u0001"+
+		"#\b\u0001\u0001\u0001\u0000\u0000\u0002\u0000\u0002\u0000\u0000\'\u0000"+
+		"\u0007\u0001\u0000\u0000\u0000\u0002\"\u0001\u0000\u0000\u0000\u0004\u0006"+
+		"\u0003\u0002\u0001\u0000\u0005\u0004\u0001\u0000\u0000\u0000\u0006\t\u0001"+
+		"\u0000\u0000\u0000\u0007\u0005\u0001\u0000\u0000\u0000\u0007\b\u0001\u0000"+
+		"\u0000\u0000\b\n\u0001\u0000\u0000\u0000\t\u0007\u0001\u0000\u0000\u0000"+
+		"\n\u000b\u0005\u0000\u0000\u0001\u000b\u0001\u0001\u0000\u0000\u0000\f"+
+		"\r\u0005\u0002\u0000\u0000\r\u000f\u0005\u0001\u0000\u0000\u000e\u0010"+
+		"\u0005\b\u0000\u0000\u000f\u000e\u0001\u0000\u0000\u0000\u000f\u0010\u0001"+
+		"\u0000\u0000\u0000\u0010\u0011\u0001\u0000\u0000\u0000\u0011\u0012\u0005"+
+		"\u0006\u0000\u0000\u0012\u0013\u0005\u0001\u0000\u0000\u0013\u0014\u0005"+
+		"\u0005\u0000\u0000\u0014\u0015\u0005\u0001\u0000\u0000\u0015#\u0005\u0007"+
+		"\u0000\u0000\u0016\u0017\u0005\u0003\u0000\u0000\u0017\u0018\u0005\u0001"+
+		"\u0000\u0000\u0018\u0019\u0005\t\u0000\u0000\u0019\u001a\u0005\u0001\u0000"+
+		"\u0000\u001a\u001b\u0005\t\u0000\u0000\u001b\u001c\u0005\u0001\u0000\u0000"+
+		"\u001c\u001f\u0005\u0007\u0000\u0000\u001d\u001e\u0005\u0001\u0000\u0000"+
+		"\u001e \u0005\u0007\u0000\u0000\u001f\u001d\u0001\u0000\u0000\u0000\u001f"+
+		" \u0001\u0000\u0000\u0000 #\u0001\u0000\u0000\u0000!#\u0005\u0004\u0000"+
+		"\u0000\"\f\u0001\u0000\u0000\u0000\"\u0016\u0001\u0000\u0000\u0000\"!"+
+		"\u0001\u0000\u0000\u0000#\u0003\u0001\u0000\u0000\u0000\u0004\u0007\u000f"+
+		"\u001f\"";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

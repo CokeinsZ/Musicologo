@@ -10,17 +10,18 @@ else:
 
 def serializedATN():
     return [
-        4,1,8,34,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,1,
-        1,1,1,1,1,3,1,16,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,26,8,1,
-        1,1,3,1,29,8,1,1,1,3,1,32,8,1,1,1,0,0,2,0,2,0,0,37,0,7,1,0,0,0,2,
-        31,1,0,0,0,4,6,3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,0,0,7,8,1,
-        0,0,0,8,10,1,0,0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,0,0,12,13,
-        5,2,0,0,13,15,5,1,0,0,14,16,5,6,0,0,15,14,1,0,0,0,15,16,1,0,0,0,
-        16,17,1,0,0,0,17,32,5,5,0,0,18,19,5,3,0,0,19,20,5,1,0,0,20,21,5,
-        7,0,0,21,22,5,1,0,0,22,28,5,7,0,0,23,25,5,1,0,0,24,26,5,6,0,0,25,
-        24,1,0,0,0,25,26,1,0,0,0,26,27,1,0,0,0,27,29,5,5,0,0,28,23,1,0,0,
-        0,28,29,1,0,0,0,29,32,1,0,0,0,30,32,5,4,0,0,31,12,1,0,0,0,31,18,
-        1,0,0,0,31,30,1,0,0,0,32,3,1,0,0,0,5,7,15,25,28,31
+        4,1,10,37,2,0,7,0,2,1,7,1,1,0,5,0,6,8,0,10,0,12,0,9,9,0,1,0,1,0,
+        1,1,1,1,1,1,3,1,16,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+        1,1,1,1,1,1,1,3,1,32,8,1,1,1,3,1,35,8,1,1,1,0,0,2,0,2,0,0,39,0,7,
+        1,0,0,0,2,34,1,0,0,0,4,6,3,2,1,0,5,4,1,0,0,0,6,9,1,0,0,0,7,5,1,0,
+        0,0,7,8,1,0,0,0,8,10,1,0,0,0,9,7,1,0,0,0,10,11,5,0,0,1,11,1,1,0,
+        0,0,12,13,5,2,0,0,13,15,5,1,0,0,14,16,5,8,0,0,15,14,1,0,0,0,15,16,
+        1,0,0,0,16,17,1,0,0,0,17,18,5,6,0,0,18,19,5,1,0,0,19,20,5,5,0,0,
+        20,21,5,1,0,0,21,35,5,7,0,0,22,23,5,3,0,0,23,24,5,1,0,0,24,25,5,
+        9,0,0,25,26,5,1,0,0,26,27,5,9,0,0,27,28,5,1,0,0,28,31,5,7,0,0,29,
+        30,5,1,0,0,30,32,5,7,0,0,31,29,1,0,0,0,31,32,1,0,0,0,32,35,1,0,0,
+        0,33,35,5,4,0,0,34,12,1,0,0,0,34,22,1,0,0,0,34,33,1,0,0,0,35,3,1,
+        0,0,0,4,7,15,31,34
     ]
 
 class musicologoParser ( Parser ):
@@ -36,8 +37,8 @@ class musicologoParser ( Parser ):
     literalNames = [ "<INVALID>", "' '" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "COMANDO_CARGAR", "COMANDO_RECORTAR", 
-                      "COMANDO_EXPORTAR", "ARCHIVO_MP3", "RUTA", "TIEMPO", 
-                      "WS" ]
+                      "COMANDO_EXPORTAR", "COMANDO_ASIGNAR", "ARCHIVO_MP3", 
+                      "ID", "RUTA", "TIEMPO", "WS" ]
 
     RULE_inicio = 0
     RULE_expresion = 1
@@ -49,10 +50,12 @@ class musicologoParser ( Parser ):
     COMANDO_CARGAR=2
     COMANDO_RECORTAR=3
     COMANDO_EXPORTAR=4
-    ARCHIVO_MP3=5
-    RUTA=6
-    TIEMPO=7
-    WS=8
+    COMANDO_ASIGNAR=5
+    ARCHIVO_MP3=6
+    ID=7
+    RUTA=8
+    TIEMPO=9
+    WS=10
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -158,10 +161,11 @@ class musicologoParser ( Parser ):
                 return self.getTokens(musicologoParser.TIEMPO)
             else:
                 return self.getToken(musicologoParser.TIEMPO, i)
-        def ARCHIVO_MP3(self):
-            return self.getToken(musicologoParser.ARCHIVO_MP3, 0)
-        def RUTA(self):
-            return self.getToken(musicologoParser.RUTA, 0)
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(musicologoParser.ID)
+            else:
+                return self.getToken(musicologoParser.ID, i)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterRecortarFuncion" ):
@@ -212,6 +216,10 @@ class musicologoParser ( Parser ):
             return self.getToken(musicologoParser.COMANDO_CARGAR, 0)
         def ARCHIVO_MP3(self):
             return self.getToken(musicologoParser.ARCHIVO_MP3, 0)
+        def COMANDO_ASIGNAR(self):
+            return self.getToken(musicologoParser.COMANDO_ASIGNAR, 0)
+        def ID(self):
+            return self.getToken(musicologoParser.ID, 0)
         def RUTA(self):
             return self.getToken(musicologoParser.RUTA, 0)
 
@@ -237,7 +245,7 @@ class musicologoParser ( Parser ):
         self.enterRule(localctx, 2, self.RULE_expresion)
         self._la = 0 # Token type
         try:
-            self.state = 31
+            self.state = 34
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [2]:
@@ -250,50 +258,54 @@ class musicologoParser ( Parser ):
                 self.state = 15
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==6:
+                if _la==8:
                     self.state = 14
                     self.match(musicologoParser.RUTA)
 
 
                 self.state = 17
                 self.match(musicologoParser.ARCHIVO_MP3)
+                self.state = 18
+                self.match(musicologoParser.T__0)
+                self.state = 19
+                self.match(musicologoParser.COMANDO_ASIGNAR)
+                self.state = 20
+                self.match(musicologoParser.T__0)
+                self.state = 21
+                self.match(musicologoParser.ID)
                 pass
             elif token in [3]:
                 localctx = musicologoParser.RecortarFuncionContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 18
-                self.match(musicologoParser.COMANDO_RECORTAR)
-                self.state = 19
-                self.match(musicologoParser.T__0)
-                self.state = 20
-                self.match(musicologoParser.TIEMPO)
-                self.state = 21
-                self.match(musicologoParser.T__0)
                 self.state = 22
+                self.match(musicologoParser.COMANDO_RECORTAR)
+                self.state = 23
+                self.match(musicologoParser.T__0)
+                self.state = 24
                 self.match(musicologoParser.TIEMPO)
+                self.state = 25
+                self.match(musicologoParser.T__0)
+                self.state = 26
+                self.match(musicologoParser.TIEMPO)
+                self.state = 27
+                self.match(musicologoParser.T__0)
                 self.state = 28
+                self.match(musicologoParser.ID)
+                self.state = 31
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==1:
-                    self.state = 23
+                    self.state = 29
                     self.match(musicologoParser.T__0)
-                    self.state = 25
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if _la==6:
-                        self.state = 24
-                        self.match(musicologoParser.RUTA)
-
-
-                    self.state = 27
-                    self.match(musicologoParser.ARCHIVO_MP3)
+                    self.state = 30
+                    self.match(musicologoParser.ID)
 
 
                 pass
             elif token in [4]:
                 localctx = musicologoParser.ExportarFuncionContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 30
+                self.state = 33
                 self.match(musicologoParser.COMANDO_EXPORTAR)
                 pass
             else:
