@@ -5,7 +5,7 @@ inicio: expresion* EOF;
 expresion: COMANDO_CARGAR ' ' RUTA? ARCHIVO_MP3 ' ' COMANDO_ASIGNAR ' ' ID #cargarFuncion
          | COMANDO_RECORTAR ' ' TIEMPO ' ' TIEMPO ' ' ID ' ' COMANDO_ASIGNAR ' ' ID #recortarFuncion
          | COMANDO_EXPORTAR ' ' ID #exportarFuncion
-         | COMANDO_INCREMENTAR_VOL ' ' ID ' ' VALOR (' ' TIEMPO ' ' TIEMPO)? #incrementarVolFuncion
+         | COMANDO_INCREMENTAR_VOL ' ' ID ' ' VALOR (' ' TIEMPO ' ' TIEMPO)? (' ' COMANDO_ASIGNAR ' ' ID)? #incrementarVolFuncion
          | CONDICIONAL ' ' CONDICION ' ' HACER ' ' bloque (' ' ELSE ' ' bloque)? #condicionalFuncion
          | COMANDO_DIVIDIR ' ' TIEMPO ' ' ID ' ' COMANDO_ASIGNAR ' ' ID #dividirFuncion
          | COMANDO_COMBINAR ' ' ID ' ' ID ' ' COMANDO_ASIGNAR ' ' ID #combinarFuncion
@@ -31,10 +31,9 @@ ELSE: 'sino' | 'else';
 OPERADOR: '>' | '<' | '>=' | '<=' | '==' | '!=';
 CARACTERISTICA: 'duración' | 'duracion' | 'dur' | 'd' | 'volumen' | 'vol' | 'v';
 
-
+VALOR: [0-9]+ 'dB';
 ARCHIVO_MP3: [a-zA-Z0-9]+ '.mp3';
 ID: [a-zA-Z0-9]+;
 RUTA: ([a-zA-Z0-9]+ '/')+;
 TIEMPO: [0-9]+ ':' [0-9]+ (':' [0-9]+)?;
-VALOR: [0-9]+;
 WS: [ \t\r\n]+ -> skip;

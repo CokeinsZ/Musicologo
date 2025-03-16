@@ -95,6 +95,60 @@ class Evaluador(musicologoVisitor):
 
         self.audios[id].export( "archivos/" + id + ".mp3", format="mp3")
 
+    # Visit a parse tree produced by musicologoParser#incrementarVolFuncion.
+    def visitIncrementarVolFuncion(self, ctx:musicologoParser.IncrementarVolFuncionContext):
+        #TODO: Implementar la función de incrementar volumen en los segmentos de tiempo especificados
+
+        # Obtener todos los tokens del contexto
+        ids = [token.getText() for token in ctx.getTokens(musicologoParser.ID)]
+        tiempos = [token.getText() for token in ctx.getTokens(musicologoParser.TIEMPO)]
+        decibeles = int(ctx.VALOR().getText().replace("dB", ""))
+
+        if len(ids) < 1:
+            print("Error: No se proporcionó un ID.")
+            return
+
+        id_original = ids[0]  # El primer ID es el original
+        id_nuevo = ids[1] if len(ids) > 1 else None  # El segundo ID (si existe) es el nuevo
+
+        if id_original not in self.audios:
+            print("Error: El ID no existe.")
+            return
+
+        if id_nuevo:
+            if id_nuevo in self.audios:
+                print("Error: El ID para el nuevo audio ya existe.")
+                return
+            
+            self.audios[id_nuevo] = self.audios[id_original] + decibeles
+                
+        self.audios[id_original] += decibeles
+
+    # Visit a parse tree produced by musicologoParser#condicionalFuncion.
+    def visitCondicionalFuncion(self, ctx:musicologoParser.CondicionalFuncionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by musicologoParser#dividirFuncion.
+    def visitDividirFuncion(self, ctx:musicologoParser.DividirFuncionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by musicologoParser#combinarFuncion.
+    def visitCombinarFuncion(self, ctx:musicologoParser.CombinarFuncionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by musicologoParser#silenciarFuncion.
+    def visitSilenciarFuncion(self, ctx:musicologoParser.SilenciarFuncionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by musicologoParser#bloque.
+    def visitBloque(self, ctx:musicologoParser.BloqueContext):
+        return self.visitChildren(ctx)
+
+    
     def convertir_a_milisegundos(self, tiempo):
         minutos, segundos = map(int, tiempo.split(':'))
         return (minutos * 60 + segundos) * 1000
