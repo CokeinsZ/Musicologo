@@ -140,7 +140,7 @@ def serializedATN():
         249,282,287,297,302,307,312,318,324,326,331,336,1,6,0,0
     ]
 
-class musicologoLexer(Lexer):
+class musicologo2Lexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 

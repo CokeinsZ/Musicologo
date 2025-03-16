@@ -44,5 +44,59 @@ class musicologoListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by musicologoParser#incrementarVolFuncion.
+    def enterIncrementarVolFuncion(self, ctx:musicologoParser.IncrementarVolFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#incrementarVolFuncion.
+    def exitIncrementarVolFuncion(self, ctx:musicologoParser.IncrementarVolFuncionContext):
+        pass
+
+
+    # Enter a parse tree produced by musicologoParser#condicionalFuncion.
+    def enterCondicionalFuncion(self, ctx:musicologoParser.CondicionalFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#condicionalFuncion.
+    def exitCondicionalFuncion(self, ctx:musicologoParser.CondicionalFuncionContext):
+        pass
+
+
+    # Enter a parse tree produced by musicologoParser#dividirFuncion.
+    def enterDividirFuncion(self, ctx:musicologoParser.DividirFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#dividirFuncion.
+    def exitDividirFuncion(self, ctx:musicologoParser.DividirFuncionContext):
+        pass
+
+
+    # Enter a parse tree produced by musicologoParser#combinarFuncion.
+    def enterCombinarFuncion(self, ctx:musicologoParser.CombinarFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#combinarFuncion.
+    def exitCombinarFuncion(self, ctx:musicologoParser.CombinarFuncionContext):
+        pass
+
+
+    # Enter a parse tree produced by musicologoParser#silenciarFuncion.
+    def enterSilenciarFuncion(self, ctx:musicologoParser.SilenciarFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#silenciarFuncion.
+    def exitSilenciarFuncion(self, ctx:musicologoParser.SilenciarFuncionContext):
+        pass
+
+
+    # Enter a parse tree produced by musicologoParser#bloque.
+    def enterBloque(self, ctx:musicologoParser.BloqueContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#bloque.
+    def exitBloque(self, ctx:musicologoParser.BloqueContext):
+        pass
+
+
 
 del musicologoParser
