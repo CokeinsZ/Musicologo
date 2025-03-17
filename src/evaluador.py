@@ -293,6 +293,8 @@ class Evaluador(musicologoVisitor):
         # Ejecutar el bloque de expresiones el número de veces indicado
         for i in range(repeticiones):
             print(f"Ejecutando iteración {i + 1} de {repeticiones}")
+        
             self.visit(bloque)
+
 
 
