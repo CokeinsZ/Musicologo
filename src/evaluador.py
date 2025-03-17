@@ -227,7 +227,7 @@ class Evaluador(musicologoVisitor):
         if t is not None:
             valor = self.convertir_a_milisegundos(t.getText())
         elif v is not None:
-            valor = int(v.getText())
+            valor = int(re.sub(r'db|dB|DB|Db', '', v.getText()))
 
         if id not in self.audios:
             print("Error: El ID no existe.")
