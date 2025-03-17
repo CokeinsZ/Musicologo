@@ -131,6 +131,18 @@ public class musicologoBaseListener implements musicologoListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBloque(musicologoParser.BloqueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondicion(musicologoParser.CondicionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondicion(musicologoParser.CondicionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

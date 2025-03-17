@@ -98,5 +98,14 @@ class musicologoListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by musicologoParser#condicion.
+    def enterCondicion(self, ctx:musicologoParser.CondicionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#condicion.
+    def exitCondicion(self, ctx:musicologoParser.CondicionContext):
+        pass
+
+
 
 del musicologoParser

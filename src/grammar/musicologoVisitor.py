@@ -59,5 +59,10 @@ class musicologoVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by musicologoParser#condicion.
+    def visitCondicion(self, ctx:musicologoParser.CondicionContext):
+        return self.visitChildren(ctx)
+
+
 
 del musicologoParser

@@ -77,4 +77,10 @@ public interface musicologoVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBloque(musicologoParser.BloqueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link musicologoParser#condicion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondicion(musicologoParser.CondicionContext ctx);
 }

@@ -122,4 +122,14 @@ public interface musicologoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBloque(musicologoParser.BloqueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link musicologoParser#condicion}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondicion(musicologoParser.CondicionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link musicologoParser#condicion}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondicion(musicologoParser.CondicionContext ctx);
 }

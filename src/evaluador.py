@@ -1,6 +1,8 @@
 from grammar.musicologoVisitor import musicologoVisitor
 from grammar.musicologoParser import musicologoParser
 from pydub import AudioSegment
+import re
+
 
 class Evaluador(musicologoVisitor):
     def __init__(self):
@@ -98,7 +100,7 @@ class Evaluador(musicologoVisitor):
         # Obtener todos los tokens del contexto
         ids = [token.getText() for token in ctx.getTokens(musicologoParser.ID)]
         tiempos = [self.convertir_a_milisegundos(token.getText()) for token in ctx.getTokens(musicologoParser.TIEMPO)]
-        decibeles = int(ctx.VALOR().getText().replace("dB", ""))
+        decibeles = int(re.sub(r'db|dB|DB|Db', '', ctx.VOLUMEN().getText()))
 
         if len(ids) < 1:
             print("Error: No se proporcionó un ID.")
@@ -132,7 +134,15 @@ class Evaluador(musicologoVisitor):
 
     # Visit a parse tree produced by musicologoParser#condicionalFuncion.
     def visitCondicionalFuncion(self, ctx:musicologoParser.CondicionalFuncionContext):
-        return self.visitChildren(ctx)
+        # Obtener la condicion
+        condicion = ctx.condicion()
+        res = self.visit(condicion)
+
+        if res:
+            self.visit(ctx.bloque(0))
+
+        elif ctx.ELSE() is not None:
+            self.visit(ctx.bloque(1))
 
 
     # Visit a parse tree produced by musicologoParser#dividirFuncion.
@@ -202,9 +212,51 @@ class Evaluador(musicologoVisitor):
 
     # Visit a parse tree produced by musicologoParser#bloque.
     def visitBloque(self, ctx:musicologoParser.BloqueContext):
-        return self.visitChildren(ctx)
+        tareas = ctx.expresion()
+        for tarea in list(tareas):
+            self.visit(tarea)
 
-    
+    # Visit a parse tree produced by musicologoParser#condicion.
+    def visitCondicion(self, ctx:musicologoParser.CondicionContext):
+        caracteristica = ctx.CARACTERISTICA().getText()
+        id = ctx.ID().getText()
+        operador = ctx.OPERADOR().getText()
+        
+        t = ctx.TIEMPO()
+        v = ctx.VOLUMEN()
+        if t is not None:
+            valor = self.convertir_a_milisegundos(t.getText())
+        elif v is not None:
+            valor = int(v.getText())
+
+        if id not in self.audios:
+            print("Error: El ID no existe.")
+            return
+        
+        # Obtener característica
+        if caracteristica in ['duración', 'duracion', 'dur', 'd']:
+            valor_real = int(len(self.audios[id]))
+        elif caracteristica in ['volumen', 'vol', 'v']:
+            valor_real = int(self.audios[id].dBFS)
+            print(f"El volumen promedio del audio es: {self.audios[id].dBFS} dBFS antes del cambio. {valor_real}")
+
+        # Evaluar la condición
+        match operador:
+            case '<':
+                return valor_real < valor
+            case '<=':
+                return valor_real <= valor
+            case '>':
+                return valor_real > valor
+            case '>=':
+                return valor_real >= valor
+            case '==':
+                return valor_real == valor
+            case '!=':
+                return valor_real != valor
+            
+
     def convertir_a_milisegundos(self, tiempo):
         minutos, segundos = map(int, tiempo.split(':'))
         return (minutos * 60 + segundos) * 1000
+            
