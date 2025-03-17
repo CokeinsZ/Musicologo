@@ -17,9 +17,9 @@ bloque: '{' expresion (' && ' expresion)* '}' | expresion;
 COMANDO_CARGAR: 'cargar' | 'load' | 'crg' | 'ld';
 COMANDO_RECORTAR: 'recortar' | 'cut' | 'rct' | 'ct';
 COMANDO_EXPORTAR: 'exportar' | 'export' | 'exp' | 'ex';
-COMANDO_INCREMENTAR_VOL: 'subirVol' | 'up' | 'sb' | 'sp';
+COMANDO_INCREMENTAR_VOL: 'subirVol';
 COMANDO_ASIGNAR: 'como' | 'as';
-COMANDO_DIVIDIR: 'dividir_en_trozos' | 'split' | 'div';
+COMANDO_DIVIDIR: 'dividir' | 'split' | 'div';
 COMANDO_COMBINAR: 'combinar' | 'mix' | 'comb';
 COMANDO_SILENCIAR: 'silenciar' | 'mute' | 'sil';
 
@@ -31,7 +31,7 @@ ELSE: 'sino' | 'else';
 OPERADOR: '>' | '<' | '>=' | '<=' | '==' | '!=';
 CARACTERISTICA: 'duración' | 'duracion' | 'dur' | 'd' | 'volumen' | 'vol' | 'v';
 
-VALOR: [0-9]+ 'dB';
+VALOR: ('-')?[0-9]+ ('dB' | 'db' | 'DB' | 'Db');
 ARCHIVO_MP3: [a-zA-Z0-9]+ '.mp3';
 ID: [a-zA-Z0-9]+;
 RUTA: ([a-zA-Z0-9]+ '/')+;

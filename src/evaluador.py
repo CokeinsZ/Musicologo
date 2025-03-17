@@ -43,24 +43,20 @@ class Evaluador(musicologoVisitor):
         print(self.audios)
     
     def visitRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):      
-        # Get start time in milliseconds
-        start_time = ctx.getChild(2).getText()
-        start = self.convertir_a_milisegundos(start_time)
-
-        # Get end time in milliseconds
-        end_time = ctx.getChild(4).getText()
-        end = self.convertir_a_milisegundos(end_time)
+        # Get start and end time in milliseconds
+        start = self.convertir_a_milisegundos(ctx.getChild(2).getText())
+        end = self.convertir_a_milisegundos(ctx.getChild(4).getText())
 
         # Get the ID of the original audio
         if ctx.getChild(6) is not None:
             id_original = ctx.getChild(6).getText()
 
-        elif ctx.getChild(6) not in self.audios:
-            print("Error: El ID no existe.")
-            return
-
         else:
             print("Error: No se proporcionó un ID.")
+            return
+
+        if ctx.getChild(6).getText() not in self.audios:
+            print("Error: El ID no existe.")
             return
 
         # Get the ID for the new audio
@@ -101,7 +97,7 @@ class Evaluador(musicologoVisitor):
 
         # Obtener todos los tokens del contexto
         ids = [token.getText() for token in ctx.getTokens(musicologoParser.ID)]
-        tiempos = [token.getText() for token in ctx.getTokens(musicologoParser.TIEMPO)]
+        tiempos = [self.convertir_a_milisegundos(token.getText()) for token in ctx.getTokens(musicologoParser.TIEMPO)]
         decibeles = int(ctx.VALOR().getText().replace("dB", ""))
 
         if len(ids) < 1:
@@ -120,9 +116,19 @@ class Evaluador(musicologoVisitor):
                 print("Error: El ID para el nuevo audio ya existe.")
                 return
             
-            self.audios[id_nuevo] = self.audios[id_original] + decibeles
-                
-        self.audios[id_original] += decibeles
+            if len(tiempos) < 2:
+                self.audios[id_nuevo] = self.audios[id_original] + decibeles
+                return
+
+            self.audios[id_nuevo] = self.audios[id_original][:tiempos[0]] + self.audios[id_original][tiempos[0]:tiempos[1]].apply_gain(decibeles) + self.audios[id_original][tiempos[1]:]
+            return
+        
+        else:
+            if len(tiempos) < 2:
+                self.audios[id_original] += decibeles
+                return
+
+            self.audios[id_original] = self.audios[id_original][:tiempos[0]] + self.audios[id_original][tiempos[0]:tiempos[1]].apply_gain(decibeles) + self.audios[id_original][tiempos[1]:]
 
     # Visit a parse tree produced by musicologoParser#condicionalFuncion.
     def visitCondicionalFuncion(self, ctx:musicologoParser.CondicionalFuncionContext):
@@ -131,17 +137,67 @@ class Evaluador(musicologoVisitor):
 
     # Visit a parse tree produced by musicologoParser#dividirFuncion.
     def visitDividirFuncion(self, ctx:musicologoParser.DividirFuncionContext):
-        return self.visitChildren(ctx)
+        # Obtener todos los tokens del contexto
+        ids = [token.getText() for token in ctx.getTokens(musicologoParser.ID)]
+        tiempo = self.convertir_a_milisegundos(ctx.TIEMPO().getText())
+
+        if len(ids) < 2:
+            print("Error: No se proporcionaron los ID necesarios.")
+            return
+
+        id_original = ids[0]
+        id_nuevo = ids[1]
+
+        if id_original and id_original not in self.audios:
+            print("Error: El ID no existe.")
+            return
+
+        if id_nuevo and id_nuevo in self.audios:
+                print("Error: El ID para el nuevo audio ya existe.")
+                return
+
+        self.audios[id_nuevo + "1"] = self.audios[id_original][:tiempo]
+        self.audios[id_nuevo + "2"] = self.audios[id_original][tiempo:]
 
 
     # Visit a parse tree produced by musicologoParser#combinarFuncion.
     def visitCombinarFuncion(self, ctx:musicologoParser.CombinarFuncionContext):
-        return self.visitChildren(ctx)
+        # Obtener todos los tokens del contexto
+        ids = [token.getText() for token in ctx.getTokens(musicologoParser.ID)]
+
+        if len(ids) < 3:
+            print("Error: No se proporcionaron los ID necesarios.")
+            return
+
+        id_original_1 = ids[0]
+        id_original_2 = ids[1]
+        id_nuevo = ids[2]
+
+        if (id_original_1 or id_original_2) and (id_original_1 not in self.audios or id_original_2 not in self.audios):
+            print("Error: El ID no existe.")
+            return
+
+        if id_nuevo and id_nuevo in self.audios:
+            print("Error: El ID para el nuevo audio ya existe.")
+            return
+
+        self.audios[id_nuevo] = self.audios[id_original_1] + self.audios[id_original_2]
 
 
     # Visit a parse tree produced by musicologoParser#silenciarFuncion.
     def visitSilenciarFuncion(self, ctx:musicologoParser.SilenciarFuncionContext):
-        return self.visitChildren(ctx)
+        id = ctx.ID().getText()
+        tiempos = [self.convertir_a_milisegundos(token.getText()) for token in ctx.getTokens(musicologoParser.TIEMPO)]
+
+        if id not in self.audios:
+            print("Error: El ID no existe.")
+            return
+
+        if len(tiempos) < 2:
+            print("Error: No se proporcionaron los tiempos necesarios.")
+            return
+        
+        self.audios[id] = self.audios[id][:tiempos[0]] + AudioSegment.silent(duration=(tiempos[1] - tiempos[0])) + self.audios[id][tiempos[1]:] #Reemplaza el segmento de tiempo con silencio   
 
 
     # Visit a parse tree produced by musicologoParser#bloque.

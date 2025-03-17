@@ -32,7 +32,7 @@ public class musicologoParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "' '", "'{'", "' && '", "'}'"
+			null, "' '", "'{'", "' && '", "'}'", null, null, null, "'subirVol'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();

@@ -57,7 +57,8 @@ class musicologoParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "' '", "'{'", "' && '", "'}'" ]
+    literalNames = [ "<INVALID>", "' '", "'{'", "' && '", "'}'", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "'subirVol'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "COMANDO_CARGAR", "COMANDO_RECORTAR", 
