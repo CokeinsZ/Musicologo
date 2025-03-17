@@ -1,4 +1,4 @@
-// Generated from c:/Users/alejandro/Documents/musica/src/grammar/musicologo.g4 by ANTLR 4.13.1
+// Generated from c://Users//usuario//Pictures//PROYECTOPOO//Musicologo//src//grammar//musicologo.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -124,6 +124,30 @@ public class musicologoBaseListener implements musicologoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterConcatenarFuncion(musicologoParser.ConcatenarFuncionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConcatenarFuncion(musicologoParser.ConcatenarFuncionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRepetirFuncion(musicologoParser.RepetirFuncionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRepetirFuncion(musicologoParser.RepetirFuncionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBloque(musicologoParser.BloqueContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -131,6 +155,18 @@ public class musicologoBaseListener implements musicologoListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBloque(musicologoParser.BloqueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondicion(musicologoParser.CondicionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondicion(musicologoParser.CondicionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

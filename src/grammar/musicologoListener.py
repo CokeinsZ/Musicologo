@@ -89,6 +89,24 @@ class musicologoListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by musicologoParser#concatenarFuncion.
+    def enterConcatenarFuncion(self, ctx:musicologoParser.ConcatenarFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#concatenarFuncion.
+    def exitConcatenarFuncion(self, ctx:musicologoParser.ConcatenarFuncionContext):
+        pass
+
+
+    # Enter a parse tree produced by musicologoParser#repetirFuncion.
+    def enterRepetirFuncion(self, ctx:musicologoParser.RepetirFuncionContext):
+        pass
+
+    # Exit a parse tree produced by musicologoParser#repetirFuncion.
+    def exitRepetirFuncion(self, ctx:musicologoParser.RepetirFuncionContext):
+        pass
+
+
     # Enter a parse tree produced by musicologoParser#bloque.
     def enterBloque(self, ctx:musicologoParser.BloqueContext):
         pass

@@ -54,6 +54,16 @@ class musicologoVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by musicologoParser#concatenarFuncion.
+    def visitConcatenarFuncion(self, ctx:musicologoParser.ConcatenarFuncionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by musicologoParser#repetirFuncion.
+    def visitRepetirFuncion(self, ctx:musicologoParser.RepetirFuncionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by musicologoParser#bloque.
     def visitBloque(self, ctx:musicologoParser.BloqueContext):
         return self.visitChildren(ctx)

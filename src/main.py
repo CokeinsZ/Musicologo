@@ -10,8 +10,13 @@ def evaluar_expresion(expresion):
     token_stream = CommonTokenStream(lexer)
     parser = musicologoParser(token_stream)
     tree = parser.inicio()
-    
+
+    # Imprime el árbol de análisis sintáctico
+    print("Árbol de análisis sintáctico:")
+    print(tree.toStringTree(recog=parser))
+
     evaluador.visit(tree)
+
 
 def main():
     print("Bienvenido a Musicologo. Ingrese los comandos que desee.")

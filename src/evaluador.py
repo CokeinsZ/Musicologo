@@ -259,4 +259,25 @@ class Evaluador(musicologoVisitor):
     def convertir_a_milisegundos(self, tiempo):
         minutos, segundos = map(int, tiempo.split(':'))
         return (minutos * 60 + segundos) * 1000
-            
+    
+    
+    def visitConcatenarFuncion(self, ctx:musicologoParser.ConcatenarFuncionContext):
+        # Obtener el ID del audio original
+        id_original = ctx.ID(0).getText()
+
+        repeticiones = int(ctx.NUMERO().getText())
+
+        # Obtener el ID del nuevo audio
+        id_nuevo = ctx.ID(1).getText()
+
+        # Verificar que el audio original exista
+        if id_original not in self.audios:
+            print(f"Error: El audio con ID '{id_original}' no existe.")
+            return
+
+        # Concatenar el audio
+        self.audios[id_nuevo] = self.audios[id_original] * repeticiones
+
+        print(f"Audio '{id_original}' concatenado {repeticiones} veces y guardado como '{id_nuevo}'.")
+
+
