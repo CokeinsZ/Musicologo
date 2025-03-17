@@ -83,13 +83,13 @@ class Evaluador(musicologoVisitor):
         if ctx.ID() is not None:
             id = ctx.ID().getText()
 
-        elif ctx.ID() not in self.audios:
-            print("Error: El ID no existe.")
-            return
-
         else:
             print("Error: No se proporcionó un ID.")     
-            return   
+            return  
+        
+        if ctx.ID().getText() not in self.audios:
+            print("Error: El ID no existe.")
+            return 
 
         self.audios[id].export( "archivos/" + id + ".mp3", format="mp3")
 
@@ -279,5 +279,20 @@ class Evaluador(musicologoVisitor):
         self.audios[id_nuevo] = self.audios[id_original] * repeticiones
 
         print(f"Audio '{id_original}' concatenado {repeticiones} veces y guardado como '{id_nuevo}'.")
+        
+        
+    def visitRepetirFuncion(self, ctx:musicologoParser.RepetirFuncionContext):
+        repeticiones = int(ctx.NUMERO().getText())
+
+        # Obtener el bloque de expresiones
+        bloque = ctx.bloque()
+        if bloque is None:
+            print("Error: No se encontró un bloque de expresiones para repetir.")
+            return
+
+        # Ejecutar el bloque de expresiones el número de veces indicado
+        for i in range(repeticiones):
+            print(f"Ejecutando iteración {i + 1} de {repeticiones}")
+            self.visit(bloque)
 
 
