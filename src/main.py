@@ -11,9 +11,10 @@ def evaluar_expresion(expresion):
     parser = musicologoParser(token_stream)
     tree = parser.inicio()
 
+
     # Imprime el árbol de análisis sintáctico
-    print("Árbol de análisis sintáctico:")
-    print(tree.toStringTree(recog=parser))
+    #print("Árbol de análisis sintáctico:")
+    #print(tree.toStringTree(recog=parser))
 
     evaluador.visit(tree)
 

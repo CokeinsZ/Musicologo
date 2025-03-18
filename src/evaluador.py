@@ -26,6 +26,11 @@ class Evaluador(musicologoVisitor):
             print("Error: No se proporcionó un archivo de audio.")
             return
         
+        # Ensure the file name ends with .mp3
+        if not nombre.endswith(".mp3"):
+            print("Error: Solo se soportan archivos .mp3.")
+            return
+        
         # Get the ID
         if ctx.ID() is not None:
             id = ctx.ID().getText()
@@ -40,9 +45,7 @@ class Evaluador(musicologoVisitor):
 
         self.audios[id] = AudioSegment.from_file(nombre, format="mp3")
 
-        #debug
         print("Cargando archivo: " + nombre)
-        print(self.audios)
     
     def visitRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):      
         # Get start and end time in milliseconds
@@ -73,7 +76,7 @@ class Evaluador(musicologoVisitor):
             print("Error: No se proporcionó un ID para el nuevo audio recortado.")
             return
 
-        print("Recortando archivo " + id_original + " de " + str(start) + " a " + str(end))
+        print("Recortando archivo " + id_original + " de " + str(start) + " a " + str(end) + " y guardando como " + id_nuevo)
 
         # Saves the audio file with the specified range
         self.audios[id_nuevo] = self.audios[id_original][start:end]
@@ -92,11 +95,10 @@ class Evaluador(musicologoVisitor):
             return 
 
         self.audios[id].export( "archivos/" + id + ".mp3", format="mp3")
+        print("Exportando archivo " + id + " a archivos/" + id + ".mp3")
 
     # Visit a parse tree produced by musicologoParser#incrementarVolFuncion.
     def visitIncrementarVolFuncion(self, ctx:musicologoParser.IncrementarVolFuncionContext):
-        #TODO: Implementar la función de incrementar volumen en los segmentos de tiempo especificados
-
         # Obtener todos los tokens del contexto
         ids = [token.getText() for token in ctx.getTokens(musicologoParser.ID)]
         tiempos = [self.convertir_a_milisegundos(token.getText()) for token in ctx.getTokens(musicologoParser.TIEMPO)]
@@ -120,17 +122,25 @@ class Evaluador(musicologoVisitor):
             
             if len(tiempos) < 2:
                 self.audios[id_nuevo] = self.audios[id_original] + decibeles
+                print("Incrementando volumen del audio "
+                      + id_original + " en " + decibeles + " dB y guardando como " + id_nuevo)
                 return
 
             self.audios[id_nuevo] = self.audios[id_original][:tiempos[0]] + self.audios[id_original][tiempos[0]:tiempos[1]].apply_gain(decibeles) + self.audios[id_original][tiempos[1]:]
+            print("Incrementando volumen del audio "
+                  + id_original + " en " + decibeles + " dB de " + tiempos[0] + " a " + tiempos[1] + " y guardando como " + id_nuevo)
             return
         
         else:
             if len(tiempos) < 2:
                 self.audios[id_original] += decibeles
+                print("Incrementando volumen del audio "
+                      + id_original + " en " + decibeles + " dB")
                 return
 
             self.audios[id_original] = self.audios[id_original][:tiempos[0]] + self.audios[id_original][tiempos[0]:tiempos[1]].apply_gain(decibeles) + self.audios[id_original][tiempos[1]:]
+            print("Incrementando volumen del audio "
+                  + id_original + " en " + decibeles + " dB de " + tiempos[0] + " a " + tiempos[1])
 
     # Visit a parse tree produced by musicologoParser#condicionalFuncion.
     def visitCondicionalFuncion(self, ctx:musicologoParser.CondicionalFuncionContext):
@@ -140,9 +150,11 @@ class Evaluador(musicologoVisitor):
 
         if res:
             self.visit(ctx.bloque(0))
+            print("Condición verdadera.")
 
         elif ctx.ELSE() is not None:
             self.visit(ctx.bloque(1))
+            print("Condición falsa.")
 
 
     # Visit a parse tree produced by musicologoParser#dividirFuncion.
@@ -168,6 +180,7 @@ class Evaluador(musicologoVisitor):
 
         self.audios[id_nuevo + "1"] = self.audios[id_original][:tiempo]
         self.audios[id_nuevo + "2"] = self.audios[id_original][tiempo:]
+        print("Dividiendo audio " + id_original + " en " + tiempo + " y guardando como " + id_nuevo + "1 y " + id_nuevo + "2.")
 
 
     # Visit a parse tree produced by musicologoParser#combinarFuncion.
@@ -192,6 +205,7 @@ class Evaluador(musicologoVisitor):
             return
 
         self.audios[id_nuevo] = self.audios[id_original_1] + self.audios[id_original_2]
+        print("Combinando audio " + id_original_1 + " y " + id_original_2 + " y guardando como " + id_nuevo)
 
 
     # Visit a parse tree produced by musicologoParser#silenciarFuncion.
@@ -208,6 +222,7 @@ class Evaluador(musicologoVisitor):
             return
         
         self.audios[id] = self.audios[id][:tiempos[0]] + AudioSegment.silent(duration=(tiempos[1] - tiempos[0])) + self.audios[id][tiempos[1]:] #Reemplaza el segmento de tiempo con silencio   
+        print("Silenciando audio " + id + " de " + tiempos[0] + " a " + tiempos[1])
 
 
     # Visit a parse tree produced by musicologoParser#bloque.

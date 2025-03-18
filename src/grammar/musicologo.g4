@@ -37,7 +37,7 @@ OPERADOR: '>' | '<' | '>=' | '<=' | '==' | '!=';
 CARACTERISTICA: 'duración' | 'duracion' | 'dur' | 'd' | 'volumen' | 'vol' | 'v';
 
 VOLUMEN: ('-')?[0-9]+ ('dB' | 'db' | 'DB' | 'Db');
-ARCHIVO_MP3: [a-zA-Z0-9]+ '.mp3';
+ARCHIVO_MP3: [a-zA-Z0-9]+ '.' ('mp3' | [a-zA-Z0-9]+);
 ID: [a-zA-Z][a-zA-Z0-9]*; // Empieza con una letra y puede contener números
 RUTA: ([a-zA-Z0-9]+ '/')+;
 TIEMPO: [0-9]+ ':' [0-9]+ (':' [0-9]+)?;
