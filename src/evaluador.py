@@ -42,10 +42,15 @@ class Evaluador(musicologoVisitor):
         else:
             print("Error: No se proporcionó un ID.")     
             return   
+        
+        try: 
 
-        self.audios[id] = AudioSegment.from_file(nombre, format="mp3")
+            self.audios[id] = AudioSegment.from_file(nombre, format="mp3")
+            print("Cargando archivo: " + nombre)
 
-        print("Cargando archivo: " + nombre)
+            
+        except FileNotFoundError:
+            print("Error: No se encontró el archivo.")
     
     def visitRecortarFuncion(self, ctx:musicologoParser.RecortarFuncionContext):      
         # Get start and end time in milliseconds
